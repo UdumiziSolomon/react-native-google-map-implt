@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app",
+    "name": "Trafiko",
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,16 +18,28 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.solomonnode.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "config": {
+        "googleMaps": {
+           "apiKey": ""
+        }
+      },
+      "package": "com.solomonnode.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "98e1ab55-c3fd-436e-bf20-4d1734205134"
+      }
     }
   }
 }

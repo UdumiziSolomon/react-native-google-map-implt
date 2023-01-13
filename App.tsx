@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler"
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import React, { useEffect, useState, FC } from 'react';
+import AppStack from '@navigations/domains/app/app.stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
+// splash 
+import Splash from './src/splash.screen' ;
+
+const App:FC = () => {
+
+  const [splash, setSplash] = useState(false);
+
+  useEffect(() => {
+    const loadUser = () => {
+      setSplash(true);
+    }
+    setTimeout(loadUser, 3000);
+  }, []);
+  
+  if(!splash){
+      return <Splash /> ;
+  }else{
+    return (
+      <NavigationContainer>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <AppStack />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </NavigationContainer>
+    );
+  }
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App ;
