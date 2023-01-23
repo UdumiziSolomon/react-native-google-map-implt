@@ -1,16 +1,30 @@
 export const historyData = [
-  {
-    busStop: 'North Gate',
-    city: 'Akure',
-    latitude: 7.2570,
-    longitude: 5.1991,
-  },
-  {
-    busStop: 'Oyemekun Road',
-    city: 'Akure',
-    latitude: 7.2570,
-    longitude: 5.1991,
-  }
+   {
+     nodeFrom: "North Gate",
+     nodeTo: "Wesco",
+     latitude: 7.30693303,
+     longitude: 5.1398688,
+     averageETA: "1:39",
+     distance: 980.7686968480177,
+     dominatingLandUse: "Commercial",
+     typeOfLane: "Single",
+     trafficSituation: "Moderate",
+     speedBumps: "Many",
+     roadClass: "Fair"
+    },
+    {
+     nodeFrom: "Wesco",
+     nodeTo: "Acad ",
+     latitude: 7.303495,
+     longitude: 5.14805333,
+     averageETA: "1:51",
+     distance: 1200.070439165987,
+     dominatingLandUse: "Commercial",
+     typeOfLane: "Single",
+     trafficSituation: "Free",
+     speedBumps: "None",
+     roadClass: "Good"
+    },
 ]
 
 

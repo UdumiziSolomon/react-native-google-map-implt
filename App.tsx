@@ -5,11 +5,14 @@ import AppStack from '@navigations/domains/app/app.stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 // splash 
 import Splash from './src/splash.screen' ;
 
-const App:FC = () => {
+const App = () => {
 
   const [splash, setSplash] = useState(false);
 
@@ -17,7 +20,7 @@ const App:FC = () => {
     const loadUser = () => {
       setSplash(true);
     }
-    setTimeout(loadUser, 3000);
+    setTimeout(loadUser, 2000);
   }, []);
   
   if(!splash){

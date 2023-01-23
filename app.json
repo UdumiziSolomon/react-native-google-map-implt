@@ -2,14 +2,14 @@
   "expo": {
     "name": "Trafiko",
     "slug": "app",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/dis.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#2A166F"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,8 +22,18 @@
       "bundleIdentifier": "com.solomonnode.app"
     },
     "android": {
+      "permissions": [
+        "LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_FOREGROUND_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "config": {

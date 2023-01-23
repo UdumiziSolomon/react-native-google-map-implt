@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View , Image, Dimensions, StatusBar } from 'react-native'
-import React from 'react';
+import { StyleSheet, Text, View , Image, Dimensions, StatusBar, BackHandler } from 'react-native'
+import React, { useEffect } from 'react';
 import { ScaledSheet, vs } from 'react-native-size-matters';
 
 
@@ -7,6 +7,23 @@ const { width, height } = Dimensions.get('window');
 
 
 const Exit = () => {
+
+     useEffect(() => {
+        // back handle exit app
+      //   BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
+      //   return () => {
+      //     BackHandler.removeEventListener('hardwareBackPress', backButtonHandler);
+      // };
+      setTimeout(() => {
+        backButtonHandler();
+      }, 2000);
+    }, []);
+
+    const backButtonHandler = (): any => {
+      BackHandler.exitApp();
+    }
+
+
   return (
     <View style={styles.container}>
         <StatusBar translucent={true} backgroundColor="#fff" barStyle={"dark-content"} />

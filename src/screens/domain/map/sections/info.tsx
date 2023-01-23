@@ -21,7 +21,7 @@ const Info = ({ info, closeInfo }: any) => {
               <View style={styles.details_layer}>
               <Icon name="map-marker" style={styles.info_iconn} />
                 <Text style={styles.details_first_text}> Node From:  </Text>
-                <Text style={styles.details_second_text}> {info.busStop} </Text>
+                <Text style={styles.details_second_text}> {info.nodeFrom} </Text>
               </View>
 
               <View style={styles.details_layer}>
@@ -32,56 +32,63 @@ const Info = ({ info, closeInfo }: any) => {
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Easting:  </Text>
-                <Text style={styles.details_second_text}> {info.busStop} </Text>
+                <Text style={styles.details_first_text}> Latitude:  </Text>
+                <Text style={styles.details_second_text}> {info.latitude} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Northing:  </Text>
-                <Text style={styles.details_second_text}> {info.nodeTo} </Text>
+                <Text style={styles.details_first_text}> Longitude:  </Text>
+                <Text style={styles.details_second_text}> {info.longitude} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Average eta:  </Text>
-                <Text style={styles.details_second_text}> {info.busStop} </Text>
+                <Text style={styles.details_first_text}> ETA to next node  </Text>
+                <Text style={styles.details_second_text}> {info.averageETA} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Distance:  </Text>
-                <Text style={styles.details_second_text}> {info.nodeTo} </Text>
+                <Text style={styles.details_first_text}> Distance to next node (m):  </Text>
+                <Text style={styles.details_second_text}> {info.distance} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Dominating:  </Text>
-                <Text style={styles.details_second_text}> {info.busStop} </Text>
+                <Text style={styles.details_first_text}> Average speed to next node (km/hr)  </Text>
+                <Text style={styles.details_second_text}> {info.average} </Text>
+              </View>
+
+               <View style={styles.details_layer}>
+                <Icon name="map-marker" style={styles.info_iconn} />
+                <Text style={styles.details_first_text}> Peak period:  </Text>
+                <Text style={styles.details_second_text}> {info.peakPeriod} </Text>
+              </View>
+
+              <View style={styles.details_layer}>
+                <Icon name="map-marker" style={styles.info_iconn} />
+                <Text style={styles.details_first_text}> Dominating Land use:  </Text>
+                <Text style={styles.details_second_text}> {info.dominatingLandUse} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
                 <Text style={styles.details_first_text}> Type of lane:  </Text>
-                <Text style={styles.details_second_text}> {info.nodeTo} </Text>
+                <Text style={styles.details_second_text}> {info.typeOfLane} </Text>
               </View>
 
-              <View style={styles.details_layer}>
-                <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Traffic situation:  </Text>
-                <Text style={styles.details_second_text}> {info.busStop} </Text>
-              </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
                 <Text style={styles.details_first_text}> Speed bumps:  </Text>
-                <Text style={styles.details_second_text}> {info.nodeTo} </Text>
+                <Text style={styles.details_second_text}> {info.speedBumps} </Text>
               </View>
 
               <View style={styles.details_layer}>
                 <Icon name="map-marker" style={styles.info_iconn} />
-                <Text style={styles.details_first_text}> Road class:  </Text>
-                <Text style={styles.details_second_text}> {info.nodeTo} </Text>
+                <Text style={styles.details_first_text}> Road  condition:  </Text>
+                <Text style={styles.details_second_text}> {info.trafficSituation} </Text>
               </View>
 
           </ScrollView>
@@ -119,7 +126,7 @@ const styles = ScaledSheet.create({
     marginRight: vs(5)
 },
   display_header_layer: {
-    paddingVertical: vs(10),
+    paddingVertical: vs(5),
     alignItems: 'flex-end'
   },
   display_top_text: {

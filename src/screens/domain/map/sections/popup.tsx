@@ -1,5 +1,5 @@
 import React, { useState, Children } from 'react';
-import { Text, View, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 import { ScaledSheet, vs } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RadioButton } from 'react-native-paper';
@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { MapCustomData } from '../data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,33 +26,37 @@ const Popup = ({ closePop }: PopProp) => {
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
-  const [inputStat, setInputStat] = useState(false);
-  const [checked, setChecked] = useState('');
+  const [inputStat, setInputStat] = useState<boolean>(false);
+  const [checked, setChecked] = useState<number>();
+  const [checkedd, setCheckedd] = useState<number>();
 
-  const [coords, setCoords] = useState({
-    origin: '',
-    destination: ''
-  });
 
-  const { origin, destination } = coords ;
+  const [originData, setOriginData] = useState({});
+  const [destinationData, setDestinationData] = useState({});
+
+  const [show, setShow] = useState(false);
 
   const switchStat = () => {
     setInputStat(!inputStat);
   }
 
-  const onClose = async (val: string) => {
-    setCoords({...coords, origin: val });
+  const onClose = async (val: any, index: number) => {
+    setChecked(index);
+    setOriginData(val);
     switchStat();
   }
 
-  const onCloseDestination = async (val: string) => {
-    setCoords({ ...coords, destination: val });
-    navigateFunc();
+  const onCloseDestination = async (val: any, index: number) => {
+    setShow(true);
+    setCheckedd(index);
+    setDestinationData(val);
   }
 
-  const navigateFunc = () => {
-    navigation.navigate('Workflow', { coords });
+  const navigateFunc = async () => {
+    await closePop()
+    navigation.navigate('Workflow', { originData, destinationData });
   }
+
 
   return (
     <View style={styles.container}>
@@ -63,24 +69,27 @@ const Popup = ({ closePop }: PopProp) => {
               </TouchableOpacity>
             </View>
 
-            {
-              Children.toArray(
-                MapCustomData.map(dtx => (
-                  <View style={styles.coord_layer}>
-                    <View>
-                      <Text style={styles.coord_top_text}> {dtx.busStop} </Text>
-                      <Text style={styles.coord_sub_text}> {dtx.city} </Text>
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+            >
+              {
+                  MapCustomData.map((dtx, index) => (
+                    <View key={index} style={styles.coord_layer}>
+                      <View>
+                        <Text style={styles.coord_top_text}> {dtx.nodeFrom} </Text>
+                        <Text style={styles.coord_sub_text}> Akure </Text>
+                      </View>
+                      <RadioButton
+                        color="#000"
+                        value={dtx.nodeFrom}
+                        status={ checked === index ? 'checked' : 'unchecked' }
+                        onPress={() => onClose(dtx, index)}
+                      />
                     </View>
-                    <RadioButton
-                      color="#000"
-                      value={dtx.busStop}
-                      status={ checked === dtx.busStop ? 'checked' : 'unchecked' }
-                      onPress={() => onClose(dtx.busStop)}
-                    />
-                  </View>
-                ))
-              )
-            }
+                  ))
+              }
+            </ScrollView>
+
 
 
           </View>
@@ -93,24 +102,41 @@ const Popup = ({ closePop }: PopProp) => {
             </TouchableOpacity>
           </View>
 
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
            {
-            Children.toArray(
-              MapCustomData.map(dtx => (
-                <View style={styles.coord_layer}>
+              MapCustomData.map((dtx, index) => (
+                <View key={index} style={styles.coord_layer}>
                   <View>
-                    <Text style={styles.coord_top_text}> {dtx.busStop} </Text>
-                    <Text style={styles.coord_sub_text}> {dtx.city} </Text>
+                    <Text style={styles.coord_top_text}> {dtx.nodeFrom} </Text>
+                    <Text style={styles.coord_sub_text}> Akure </Text>
                   </View>
                   <RadioButton
                     color="#000"
-                    value={dtx.busStop}
-                    status={ checked === dtx.busStop ? 'checked' : 'unchecked' }
-                    onPress={() => onCloseDestination(dtx.busStop)}
+                    value={dtx.nodeFrom}
+                    status={ checkedd === index ? 'checked' : 'unchecked' }
+                    onPress={() => onCloseDestination(dtx, index)}
                   />
                 </View>
               ))
-            )
             }
+          </ScrollView>
+
+          <View style={styles.btn_continue_layer}>
+          { show ? (
+              <TouchableOpacity onPress={navigateFunc}  style={styles.btn_continue_layerr}>
+                <Text style={styles.btn_continue_text}> Continue </Text>
+              </TouchableOpacity>
+            ): (
+              <TouchableOpacity  style={styles.btn_continue_layerrt}>
+                <Text style={styles.btn_continue_textt}> Continue </Text>
+              </TouchableOpacity>
+            )}
+            </View>
+           
+
+
           
         </View>
       )}
@@ -165,7 +191,7 @@ const styles = ScaledSheet.create({
     locale_header_text: {
       color: '#40404e',
       fontFamily: 'dsss',
-      fontSize: vs(18),
+      fontSize: vs(17),
     },
     locale_header_textt: {
       color: '#43a039',
@@ -186,12 +212,57 @@ const styles = ScaledSheet.create({
     coord_top_text: {
       color: '#525260',
       fontFamily: 'dsss',
-      fontSize: vs(14),
+      fontSize: vs(13),
     },
     coord_sub_text: {
       color: '#828286',
       fontFamily: 'Circular',
-      fontSize: vs(12),
+      fontSize: vs(11),
+    },
+    btn_continue_layer: {
+      backgroundColor: '#ffffff',
+      width: width - 30,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: vs(10),
+      position: 'absolute',
+      bottom: 0,
+      height: vs(50),
+      borderRadius: vs(20)
+    },
+    btn_continue_layerr: {
+      backgroundColor: '#5aa155',
+      width: width / 2.2,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: vs(8),
+      borderRadius: vs(50),
+      position: 'absolute',
+      bottom: 0,
+      marginBottom: vs(8)
+    },
+    btn_continue_text: {
+      color: '#ffffff',
+      fontFamily: 'dsss',
+      fontSize: vs(14),
+      paddingBottom: vs(2)
+    },
+    btn_continue_layerrt: {
+      backgroundColor: '#b6bab5',
+      width: width / 2.2,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: vs(8),
+      borderRadius: vs(50),
+      position: 'absolute',
+      bottom: 0,
+      marginBottom: vs(8)
+    },
+    btn_continue_textt: {
+      color: '#ffffff',
+      fontFamily: 'dsss',
+      fontSize: vs(14),
+      paddingBottom: vs(2)
     }
 });
 
